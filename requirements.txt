@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+sqlalchemy
+databases
+alembic
+psycopg2-binary
+redis
+faker
