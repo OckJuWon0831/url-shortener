@@ -1,11 +1,9 @@
-version: "3"
+version: "3.12"
 
 services:
   db:
     container_name: mysql_db
     image: mysql:latest
-    ports:
-      - "3305:3306"
     env_file:
       - .env
     environment:
@@ -22,8 +20,6 @@ services:
   cache:
     container_name: cache
     image: redis:6
-    ports:
-      - "6379:6379"
 
   web:
     image: url_shortener_py:latest
@@ -33,43 +29,16 @@ services:
     environment:
       DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}"
       REDIS_URL: "redis://cache:6379/0"
-    ports:
-      - "8000:8000"
 
   nginx:
     container_name: nginx
     image: nginx:latest
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - web
-
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-    ports:
-      - "9090:9090"
-
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:latest
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-
-  node_exporter:
-    image: prom/node-exporter:latest
-    ports:
-      - "9100:9100"
 
 volumes:
   mysql_db:

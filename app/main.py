@@ -1,12 +1,8 @@
 from fastapi import FastAPI
 
-app = FastAPI(__name__)
+app = FastAPI()
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050, debug=True)
+async def read_root():
+    return {"Hello": "World"}

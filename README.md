@@ -1,1 +1,1 @@
-# MementoAI Backend 과제
+# URL Shortener - Ock Ju Won
