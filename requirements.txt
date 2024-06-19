@@ -5,4 +5,4 @@ databases
 alembic
 psycopg2-binary
 redis
-faker
+pymysql

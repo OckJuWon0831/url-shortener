@@ -2,24 +2,18 @@ version: "3.12"
 
 services:
   db:
-    container_name: mysql_db
-    image: mysql:latest
-    env_file:
-      - .env
+    container_name: postgres-db
+    image: postgres:13
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
     volumes:
-      - mysql_db:/var/lib/mysql
-    restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql_db"]
-      timeout: 20s
-      retries: 10
+      - postgres_data:/var/lib/postgresql/data
 
   cache:
     container_name: cache
-    image: redis:6
+    image: redis:latest
 
   web:
     image: url_shortener_py:latest
@@ -27,7 +21,7 @@ services:
       - db
       - cache
     environment:
-      DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}"
+      DATABASE_URL: "postgresql://test:password@db/postgres"
       REDIS_URL: "redis://cache:6379/0"
 
   nginx:
@@ -41,4 +35,4 @@ services:
       - web
 
 volumes:
-  mysql_db:
+  postgres_data:
