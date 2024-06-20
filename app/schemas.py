@@ -10,3 +10,7 @@ class URL(BaseModel):
 
 class URLStats(URL):
     stats: int
+
+
+class URLShort(URL):
+    short_url: str

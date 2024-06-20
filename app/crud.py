@@ -5,11 +5,13 @@ import hashlib
 from .utils.errors import raise_bad_request, raise_not_found
 
 
-def create_db_url(db: Session, url: schemas.URL) -> schemas.URL:
+def create_db_url(db: Session, url: schemas.URL) -> schemas.URLShort:
 
     key = keygen.create_unique_random_key(db)
     secret_key = f"{key}_{keygen.create_random_key(length=7)}"
-    db_url = models.URL(original_url=url.original_url, short_url=secret_key, stats=0)
+    db_url = models.URL(
+        original_url=str(url.original_url), short_url=secret_key, stats=0
+    )
     db.add(db_url)
     try:
         db.commit()
@@ -17,7 +19,7 @@ def create_db_url(db: Session, url: schemas.URL) -> schemas.URL:
         return db_url
     except IntegrityError:
         db.rollback()
-    raise_bad_request("Could not create short URL")
+        raise_bad_request("Could not create short URL")
 
 
 def get_db_url(db: Session, short_url: str) -> models.URL:
@@ -25,9 +27,10 @@ def get_db_url(db: Session, short_url: str) -> models.URL:
     if db_url:
         db_url.stats += 1
         db.commit()
+        db.refresh(db_url)
+        return db_url
     else:
         raise_not_found(f"URL '{short_url}' not found")
-    return db_url
 
 
 def get_db_url_by_key(db: Session, url_key: str) -> models.URL:
