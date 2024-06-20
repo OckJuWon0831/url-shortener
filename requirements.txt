@@ -6,3 +6,8 @@ alembic
 psycopg2-binary
 redis
 pymysql
+pytest
+pytest-asyncio
+HTTPX
+pydantic
+validators
