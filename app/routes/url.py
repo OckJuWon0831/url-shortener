@@ -1,4 +1,3 @@
-import validators
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -13,9 +12,6 @@ router = APIRouter(tags=["URL Functionality"])
 
 @router.post("/shorten", response_model=schemas.URL)
 def create_url(url: schemas.URL, db: Session = Depends(get_db)):
-    """Create a URL shortener entry."""
-    if not validators.url(url.original_url):
-        raise_bad_request(message="URL is not Valid")
     crud.create_db_url(db=db, url=url)
 
 

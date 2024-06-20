@@ -13,6 +13,6 @@ app = FastAPI(
 models.Base.metadata.create_all(bind=engine)
 
 app.include_router(home.router)
-# app.include_router(url.router)
+app.include_router(url.router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
