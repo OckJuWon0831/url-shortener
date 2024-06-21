@@ -10,4 +10,4 @@ pytest
 pytest-asyncio
 HTTPX
 pydantic
-validators
+pytz

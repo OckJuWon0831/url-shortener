@@ -6,6 +6,6 @@ def raise_bad_request(message):
 
 
 # 키가 존재하지 않는 경우
-def raise_not_found(request):
-    message = f"URL '{request.url}' doesn't exist"
+def raise_not_found(request, message=None):
+    message = message or f"URL '{request.url}' doesn't exist"
     raise HTTPException(status_code=404, detail=message)

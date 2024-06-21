@@ -8,7 +8,7 @@ from app.database import get_db
 from app.utils.errors import raise_bad_request, raise_not_found
 import redis
 
-router = APIRouter(tags=["URL Functionality"])
+router = APIRouter(tags=["URL Shortener API 명세서"])
 r = redis.Redis(host="cache", port=6379, db=0)
 
 
@@ -31,10 +31,10 @@ def redirect_url(short_url: str, request: Request, db: Session = Depends(get_db)
     # Check Redis cache first
     cached_url = r.get(short_url)
     if cached_url:
-        db_url = crud.get_db_url(db, short_url)
+        db_url = crud.get_db_url(db, short_url, request)
         return RedirectResponse(cached_url.decode("utf-8"))
 
-    db_url = crud.get_db_url(db, short_url)
+    db_url = crud.get_db_url(db, short_url, request)
     if db_url is None:
         raise_not_found(request)
 
