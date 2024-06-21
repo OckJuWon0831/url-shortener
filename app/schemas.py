@@ -1,11 +1,11 @@
-from pydantic import BaseModel, HttpUrl, Field
+from pydantic import BaseModel, HttpUrl
 from typing import Optional
 from datetime import datetime
 
 
 class URL(BaseModel):
     original_url: HttpUrl
-    expires_in: Optional[int]
+    expires_in: int
 
     class Config:
         from_attributes = True
@@ -14,11 +14,11 @@ class URL(BaseModel):
 class URLShort(URL):
     short_url: str
     created_at: datetime
-    expires_at: Optional[datetime]
+    expires_at: datetime
 
 
 class URLStats(URL):
     short_url: str
     stats: int
     created_at: datetime
-    expires_at: Optional[datetime]
+    expires_at: datetime
