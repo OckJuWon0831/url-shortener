@@ -1,6 +1,7 @@
 # URL 단축 서비스 구현 - 옥주원
 
 ### 1️⃣ 개요
+
 사용자가 구현된 API 서버에 인터넷 주소와 만료 시간(초)를 Request body에 포함하여 요청을 보내면, 그에 맞게 단축된 주소를 받아 접속할 수 있는 FastAPI 기반 서비스입니다.
 
 ### 2️⃣ 접속 방법
@@ -10,6 +11,7 @@
 1. `git clone https://github.com/OckJuWon0831/url-shortener` 으로 프로젝트를 로컬환경으로 불러옵니다.
 2. `sh init.sh` 으로 `requirements.txt`에 명시된 라이브러리들을 설치하고, 필요한 설정값들과 도커 컨테이너들을 초기화합니다.
 3. `http://localhost:8000/` 로 접속합니다.
+4. `http://localhost:8000/docs` 를 통해 API Swagger 문서를 확인하실 수 있습니다.
 
 - API 서버에 Request를 보내고 Response를 받은 일련의 과정들은 Postman을 사용하여 수행했습니다.
 
@@ -31,9 +33,9 @@
 
    서비스의 규모 혹은 종류에 따라 보안에 대하여 어떤 해싱 알고리즘이 적합한지 고민할 필요가 있다고 생각하지만, MD5나 SHA2 모두, 본 프로젝트에서는 충분하다 느껴 환경 설정이 수월한 PostgreSQL를 이용하기로 최종결정했습니다.
 
-### 🕺 Swagger 문서
-<img width="1413" alt="Swagger" src="https://github.com/OckJuWon0831/url-shortener/assets/114837587/ef43709c-1208-4b3e-b45e-264045a9ecd4">
+### 🕺 API Swagger
 
+<img width="1413" alt="Swagger" src="https://github.com/OckJuWon0831/url-shortener/assets/114837587/ef43709c-1208-4b3e-b45e-264045a9ecd4">
 
 ### 🚀 개발 기한
 
